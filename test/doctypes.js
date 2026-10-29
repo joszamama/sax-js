@@ -49,3 +49,16 @@ require(__dirname).test({
     ['closetag', 'SVG'],
   ],
 })
+
+// with processing instruction
+require(__dirname).test({
+  xml: '<!DOCTYPE svg [<?pi x?>]><svg></svg>',
+  strict: true,
+  expect: [
+    ['processinginstruction', { name: 'pi', body: 'x' }],
+    ['doctype', ' svg []'],
+    ['opentagstart', { name: 'svg', attributes: {} }],
+    ['opentag', { name: 'svg', attributes: {}, isSelfClosing: false }],
+    ['closetag', 'svg'],
+  ],
+})
